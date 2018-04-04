@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_simplewebappwithstorage" default="compile.module.simplewebappwithstorage">
+  <dirname property="module.simplewebappwithstorage.basedir" file="${ant.file.module_simplewebappwithstorage}"/>
+  
+  <property name="module.jdk.home.simplewebappwithstorage" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.simplewebappwithstorage" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.simplewebappwithstorage" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.simplewebappwithstorage" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="simplewebappwithstorage.output.dir" value="${module.simplewebappwithstorage.basedir}/out/production/SimpleWebAppWithStorage"/>
+  <property name="simplewebappwithstorage.testoutput.dir" value="${module.simplewebappwithstorage.basedir}/out/test/SimpleWebAppWithStorage"/>
+  
+  <path id="simplewebappwithstorage.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="simplewebappwithstorage.module.production.classpath">
+    <path refid="${module.jdk.classpath.simplewebappwithstorage}"/>
+    <path refid="library.java_ee_6-java_ee_6.classpath"/>
+  </path>
+  
+  <path id="simplewebappwithstorage.runtime.production.module.classpath">
+    <pathelement location="${simplewebappwithstorage.output.dir}"/>
+    <path refid="library.java_ee_6-java_ee_6.classpath"/>
+  </path>
+  
+  <path id="simplewebappwithstorage.module.classpath">
+    <path refid="${module.jdk.classpath.simplewebappwithstorage}"/>
+    <pathelement location="${simplewebappwithstorage.output.dir}"/>
+    <path refid="library.java_ee_6-java_ee_6.classpath"/>
+  </path>
+  
+  <path id="simplewebappwithstorage.runtime.module.classpath">
+    <pathelement location="${simplewebappwithstorage.testoutput.dir}"/>
+    <pathelement location="${simplewebappwithstorage.output.dir}"/>
+    <path refid="library.java_ee_6-java_ee_6.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.simplewebappwithstorage">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.simplewebappwithstorage">
+    <patternset refid="excluded.from.module.simplewebappwithstorage"/>
+  </patternset>
+  
+  <path id="simplewebappwithstorage.module.sourcepath">
+    <dirset dir="${module.simplewebappwithstorage.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.simplewebappwithstorage" depends="compile.module.simplewebappwithstorage.production,compile.module.simplewebappwithstorage.tests" description="Compile module SimpleWebAppWithStorage"/>
+  
+  <target name="compile.module.simplewebappwithstorage.production" depends="register.custom.compilers" description="Compile module SimpleWebAppWithStorage; production classes">
+    <mkdir dir="${simplewebappwithstorage.output.dir}"/>
+    <javac2 destdir="${simplewebappwithstorage.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.simplewebappwithstorage}/javac">
+      <compilerarg line="${compiler.args.simplewebappwithstorage}"/>
+      <bootclasspath refid="simplewebappwithstorage.module.bootclasspath"/>
+      <classpath refid="simplewebappwithstorage.module.production.classpath"/>
+      <src refid="simplewebappwithstorage.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.simplewebappwithstorage"/>
+    </javac2>
+    
+    <copy todir="${simplewebappwithstorage.output.dir}">
+      <fileset dir="${module.simplewebappwithstorage.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.simplewebappwithstorage.tests" depends="register.custom.compilers,compile.module.simplewebappwithstorage.production" description="compile module SimpleWebAppWithStorage; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.simplewebappwithstorage" description="cleanup module">
+    <delete dir="${simplewebappwithstorage.output.dir}"/>
+    <delete dir="${simplewebappwithstorage.testoutput.dir}"/>
+  </target>
+</project>
