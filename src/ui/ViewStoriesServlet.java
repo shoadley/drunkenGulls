@@ -5,6 +5,7 @@ import datalayer.UniqueIdDao;
 import datalayer.UserDao;
 import models.StoryModel;
 import models.UserModel;
+import datalayer.LikeDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,6 +37,8 @@ public class ViewStoriesServlet extends javax.servlet.http.HttpServlet {
         String storyText=request.getParameter("storyText");
         String submitButtonValue = request.getParameter("submitButton");
         String deleteButtonName = getButtonNameGivenValue(request, "Delete");  // button name is storyId
+        String likeButtonName = getButtonNameGivenValue(request, "Like");  // button name is storyId
+
 
         // Maybe the user hit the view button.  If so we're going to another page.
         String viewButtonName = getButtonNameGivenValue(request, "View");
@@ -48,6 +51,12 @@ public class ViewStoriesServlet extends javax.servlet.http.HttpServlet {
         if (deleteButtonName != null) {
             int storyId = Integer.parseInt(deleteButtonName);
             StoryDao.deleteStory(storyId);
+        }
+
+        // Maybe the user hit the LIKE button.  The button name is the story ID.
+        else if (likeButtonName != null) {
+            int storyId = Integer.parseInt(likeButtonName);
+            likeStory(user, storyId);
         }
 
         // Maybe the user submitted a story
@@ -63,6 +72,11 @@ public class ViewStoriesServlet extends javax.servlet.http.HttpServlet {
         // Show the page
         RequestDispatcher dispatcher=request.getRequestDispatcher("/viewstories.jsp");
         dispatcher.forward(request, response);
+    }
+
+    // LIKE the story
+    private void likeStory(UserModel user, int storyId) {
+        LikeDao.saveLike(storyId, user.getUsername());
     }
 
     private void handleViewButton(HttpServletRequest request, HttpServletResponse response, UserModel user, String viewButtonName) throws ServletException, IOException {
