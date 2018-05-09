@@ -67,7 +67,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="viewStories?username=<%=user.getUsername()%>">Tales</a></li>
-                        <li><%=user.getUsername()%></li>
+                        <li class="active"><a href="viewUserStories"><%=user.getUsername()%></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="welcome"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>

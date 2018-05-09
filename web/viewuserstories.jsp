@@ -61,7 +61,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="viewStories?username=<%=user.getUsername()%>">Tales</a></li>
-                        <li class="inactive"><%=user.getUsername()%></li>
+                        <li class="active"><a href="viewUserStories"><%=user.getUsername()%></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="welcome"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
@@ -74,7 +74,6 @@
         <div class="container">
             <div class="row">
                 <div class="well well-sm">
-                    <h3><p class="text-primary"><%=stories.length%> Tales</h3>
                     <div class="pre-scrollable">
 
                         <ul class="list-group">

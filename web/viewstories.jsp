@@ -61,7 +61,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="viewStories?username=<%=user.getUsername()%>">Tales</a></li>
-                        <li><%=user.getUsername()%></li>
+                        <li class="active"><a href="viewUserStories"><%=user.getUsername()%></a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="welcome"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
@@ -82,7 +82,7 @@
                 <div class="form-group">
                     <label for="storyText">Tell your tale of revelry (Or as I like to say, "Smash your face into the keyboard until words appear!")</label>
                     <div class="form-group">
-                        <input type="textarea" class="form-control" id="storyText" name="storyText"
+                        <input type="text" class="form-control" id="storyText" name="storyText"
                                placeholder="What's your tale?">
                     </div>
                     <!-- Button -->
@@ -110,7 +110,7 @@
                                 <% if (stories[i].getUsername().equals("anonymous")) { %>
                                 <span class="glyphicon glyphicon-user"></span>
                                 <% } else { %>
-                                <span class="glyphicon glyphicon-user" style="color:seagreen" ><a href="viewUserStories"><%=stories[i].getUsername()%></a></span>
+                                <span class="glyphicon glyphicon-user" style="color:seagreen" ><%=stories[i].getUsername()%></span>
 
                                 <% } %>
                                 <%=stories[i].getStory()%>

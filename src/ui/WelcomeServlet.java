@@ -61,6 +61,8 @@ public class WelcomeServlet extends javax.servlet.http.HttpServlet {
             user.setUsername("anonymous");
             user.setPassword("1234");
             UserDao.saveUser(user);
+            request.getSession().setAttribute("username", user.getUsername());
+            request.getSession().setAttribute("password", user.getPassword());
         }
 
         // Load any data we need on the page into the request.
