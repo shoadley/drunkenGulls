@@ -17,6 +17,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>viewUserStoriesServlet</servlet-name>
+        <servlet-class>ui.ViewUserStoriesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>viewUserStoriesServlet</servlet-name>
+        <url-pattern>/viewUserStories</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>welcomeServlet</servlet-name>
         <servlet-class>ui.WelcomeServlet</servlet-class>
     </servlet>

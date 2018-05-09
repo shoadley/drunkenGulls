@@ -1,9 +1,10 @@
 <%@ page import="models.StoryModel" %>
 <%@ page import="models.UserModel" %>
+<%@ page import="datalayer.LikeDao" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-<title>Tale</title>
+<title>Drunken Tales</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="resources/style.css">
 <!-- Latest compiled and minified CSS -->
@@ -24,7 +25,6 @@
         font-family: 'Shadows Into Light', cursive;
     }
 </style>
-
 </head>
 <body>
 <!-- Let's start by loading information we expect in the request.
@@ -37,22 +37,16 @@
         user.setUsername("anonymous");
     }
 
-    StoryModel story = (StoryModel) request.getAttribute("story");
-    if (story == null) {
-        story = new StoryModel();
-        story.setStory("Unavailable.");
-    }
-
-    StoryModel comments[] = (StoryModel[]) request.getAttribute("storycomments");
-    if (comments == null) {
-        comments = new StoryModel[0];
+    StoryModel stories[] = (StoryModel[]) request.getAttribute("stories");
+    if (stories == null) {
+        stories = new StoryModel[0];
     }
 %>
 <p></p>
 <p></p>
 <div class="container">
 
-    <form action="viewStory" method="post">
+    <form action="viewStories" method="post">
 
         <!-- Navigation Bar -->
         <nav class="navbar navbar-inverse">
@@ -67,7 +61,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="viewStories?username=<%=user.getUsername()%>">Tales</a></li>
-                        <li><%=user.getUsername()%></li>
+                        <li class="inactive"><%=user.getUsername()%></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="welcome"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
@@ -76,66 +70,51 @@
             </div>
         </nav>
 
-        <!-- Display story -->
-        <div class="container">
-            <div class="well well-sm">
-                <h3><p class="text-primary">Tale by <%=story.getUsername()%>
-                </h3>
-                <div class="pre-scrollable">
-                    <%=story.getStory()%>
-                </div>
-            </div>
-
-            <!-- Comments on story -->
-            <!-- Display a list of stories -->
-            <div class="container">
-                <div class="row">
-                    <div class="well well-sm">
-                        <h3><p class="text-primary"><%=comments.length%> Comments</h3>
-                        <div class="pre-scrollable">
-                            <ul class="list-group">
-                                <%
-                                    for (int i = comments.length - 1; i >= 0; i--)
-                                    {
-                                %>
-                                <li class="list-group-item">
-                                    <% if (comments[i].getUsername().equals("anonymous")) { %>
-                                    <span class="glyphicon glyphicon-user"></span>
-                                    <% } else { %>
-                                    <span class="glyphicon glyphicon-user" style="color:blue" ><%=comments[i].getUsername()%></span>
-
-                                    <% } %>
-                                    <%=comments[i].getStory()%>
-                                </li>
-                                <%
-                                    }
-                                %>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Input for a new story -->
+        <!-- Display a list of stories -->
         <div class="container">
             <div class="row">
                 <div class="well well-sm">
-                    <div class="form-group">
-                        <label for="storyText">Comment</label>
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="storyText" name="storyText"
-                                   placeholder="What's your comment?">
-                        </div>
-                        <!-- Button -->
-                        <input type="submit" class="btn btn-info" name="submitButton" value="Submit">
+                    <h3><p class="text-primary"><%=stories.length%> Tales</h3>
+                    <div class="pre-scrollable">
+
+                        <ul class="list-group">
+                            <%
+                                for (int i = stories.length - 1; i >= 0; i--) {
+                                    // Skip the story if it's a comment.
+                                    if (stories[i].getCommentOnStoryID() != 0)
+                                        continue;
+                            %>
+                            <li class="list-group-item">
+                                <% if (stories[i].getUsername().equals(user.getUsername())) { %>
+                                <% if (stories[i].getUsername().equals("anonymous")) { %>
+                                <span class="glyphicon glyphicon-user"></span>
+                                <% } else { %>
+                                <span class="glyphicon glyphicon-user" style="color:seagreen" ><%=stories[i].getUsername()%></span>
+                                <% } %>
+                                <%=stories[i].getStory()%>
+                                <button type="submit" class="btn btn-default btn-xs" name="<%=stories[i].getStoryId()%>" value="View">View</button>
+                                <% if (stories[i].getUsername().equals(user.getUsername()) && !user.getUsername().equals("anonymous")) { %>
+                                <button type="submit" class="btn btn-default btn-xs" name="<%=stories[i].getStoryId()%>" value="Delete">Delete</button>
+                                <% } %>
+<!-- LIKE-->                    <button type="submit" class="btn btn-default btn-xs" name="<%=stories[i].getStoryId()%>" value="Like">Like</button>
+                                Likes: <%=LikeDao.getNumberOfLikes(stories[i].getStoryId())%>
+                                <%
+                                    }
+                                %>
+                            </li>
+                            <%
+                                }
+                            %>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-
-        <!-- Keep in mind that in servlets we also storing data in the session. -->
+        <!-- This is a screet input to the post!  Acts as if the user
+             had an input field with the username.
+         -->
+        <input type="hidden" name="username" value="<%=user.getUsername()%>">
 
     </form>
 </div>

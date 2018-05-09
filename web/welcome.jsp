@@ -2,7 +2,7 @@
 <%@ page import="com.endicott.edu.xxxxmodels.CollegeModel" --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<title>Endicott Unhappiness Project</title>
+<title>Drunken Gulls</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href = "resources/style.css">
 <!-- Latest compiled and minified CSS -->
@@ -49,6 +49,7 @@
     <p>Stories of Endicott Students at the Bottom of a Glass</p>
     <div class="form-group">
       <input type="text" name="username" class="form-control" id="username" placeholder="User ID or Be Anonymous below. ">
+        <input type="password" name="password" class="form-control" id="password" placeholder="Password">
     </div>
     <div class="container">
       <input type="submit" class="btn btn-success" name="button" value="Log In">

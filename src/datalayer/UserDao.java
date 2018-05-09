@@ -12,8 +12,8 @@ public class UserDao {
      * Given a username, return the user model.
      * Returns null, if no such user.
      */
-    public static UserModel getUser(String username) {
-        if (username == null) {
+    public static UserModel getUser(String username, String password) {
+        if (username == null || password == null) {
             return null;
         }
 
@@ -89,14 +89,16 @@ public class UserDao {
 
     private static void testUserDao() {
         String username = "danny";
+        String password = "1234";
         UserDao dao = new UserDao();
         UserModel user = new UserModel();
         user.setUsername(username);
+        user.setPassword(password);
         dao.saveUser(user);
 
-        user = dao.getUser(username);
+        user = dao.getUser(username, password);
         assert(user != null);
-        assert(user.getUsername().compareTo(username) == 0);
+        assert(user.getUsername().compareTo(username) == 0 && user.getPassword().compareTo(password) == 0);
 
         dao.deleteUser(username);
     }

@@ -79,7 +79,8 @@ public class ViewStoryServlet extends javax.servlet.http.HttpServlet {
      */
     private UserModel loadUserFromRequest(HttpServletRequest request) {
         String username = (String) request.getSession().getAttribute("username");
-        UserModel user = UserDao.getUser(username);
+        String password = (String) request.getSession().getAttribute("password");
+        UserModel user = UserDao.getUser(username, password);
 
         // If there is no user for some weird reason, just use anonymous.
         if (user == null) {

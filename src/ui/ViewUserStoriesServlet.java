@@ -1,11 +1,11 @@
 package ui;
 
+import datalayer.LikeDao;
 import datalayer.StoryDao;
 import datalayer.UniqueIdDao;
 import datalayer.UserDao;
 import models.StoryModel;
 import models.UserModel;
-import datalayer.LikeDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.logging.Logger;
 
-public class ViewStoriesServlet extends javax.servlet.http.HttpServlet {
+public class ViewUserStoriesServlet extends javax.servlet.http.HttpServlet {
     private Logger logger = Logger.getLogger(getClass().getName());
 
     /**
@@ -24,10 +24,10 @@ public class ViewStoriesServlet extends javax.servlet.http.HttpServlet {
      *
      * @param request The request has info on filled in fields and button presses.
      * @param response We use this to give the browser a response.
-     * @throws javax.servlet.ServletException
+     * @throws ServletException
      * @throws IOException
      */
-    protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logRequestParameters(request);  // Just to help with debugging.
 
         // Let's grab some data from the request.  It may or may not be
@@ -119,10 +119,10 @@ public class ViewStoriesServlet extends javax.servlet.http.HttpServlet {
      *
      * @param request
      * @param response
-     * @throws javax.servlet.ServletException
+     * @throws ServletException
      * @throws IOException
      */
-    protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Before we go the page to display the stories, we need to get the stories.
         // And then shove the stories in to the request.
         UserModel user = loadUserFromRequest(request);
@@ -131,7 +131,7 @@ public class ViewStoriesServlet extends javax.servlet.http.HttpServlet {
         request.setAttribute("user", user);
         loadStoriesIntoRequest(request);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/viewstories.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/viewuserstories.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -172,7 +172,7 @@ public class ViewStoriesServlet extends javax.servlet.http.HttpServlet {
      *
      * @param request
      */
-    private void logRequestParameters(javax.servlet.http.HttpServletRequest request) {
+    private void logRequestParameters(HttpServletRequest request) {
         Enumeration<String> params = request.getParameterNames();
         while(params.hasMoreElements()){
             String paramName = params.nextElement();

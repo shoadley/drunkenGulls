@@ -4,7 +4,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
-<title>Unhappy Stories</title>
+<title>Drunken Tales</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="resources/style.css">
 <!-- Latest compiled and minified CSS -->
@@ -61,7 +61,7 @@
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="viewStories?username=<%=user.getUsername()%>">Tales</a></li>
-                        <li class="inactive"><a href=""><%=user.getUsername()%></a></li>
+                        <li><%=user.getUsername()%></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="welcome"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
@@ -82,7 +82,7 @@
                 <div class="form-group">
                     <label for="storyText">Tell your tale of revelry (Or as I like to say, "Smash your face into the keyboard until words appear!")</label>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="storyText" name="storyText"
+                        <input type="textarea" class="form-control" id="storyText" name="storyText"
                                placeholder="What's your tale?">
                     </div>
                     <!-- Button -->
@@ -110,12 +110,12 @@
                                 <% if (stories[i].getUsername().equals("anonymous")) { %>
                                 <span class="glyphicon glyphicon-user"></span>
                                 <% } else { %>
-                                <span class="glyphicon glyphicon-user" style="color:seagreen" ><%=stories[i].getUsername()%></span>
+                                <span class="glyphicon glyphicon-user" style="color:seagreen" ><a href="viewUserStories"><%=stories[i].getUsername()%></a></span>
 
                                 <% } %>
                                 <%=stories[i].getStory()%>
                                 <button type="submit" class="btn btn-default btn-xs" name="<%=stories[i].getStoryId()%>" value="View">View</button>
-                                <% if (stories[i].getUsername().equals(user.getUsername())) { %>
+                                <% if (stories[i].getUsername().equals(user.getUsername()) && !user.getUsername().equals("anonymous")) { %>
                                 <button type="submit" class="btn btn-default btn-xs" name="<%=stories[i].getStoryId()%>" value="Delete">Delete</button>
                                 <% } %>
 <!-- LIKE-->                    <button type="submit" class="btn btn-default btn-xs" name="<%=stories[i].getStoryId()%>" value="Like">Like</button>
@@ -130,7 +130,7 @@
             </div>
         </div>
 
-        <!-- This is a screet input to the post!  Acts as if the user
+        <!-- This is a secret input to the post!  Acts as if the user
              had an input field with the username.
          -->
         <input type="hidden" name="username" value="<%=user.getUsername()%>">

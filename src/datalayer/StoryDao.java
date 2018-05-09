@@ -74,7 +74,7 @@ public class StoryDao {
     }
 
     /**
-     * Return all saved stories.
+     * Return all saved comments.
      */
     public static ArrayList<StoryModel> getStoriesThatAreComments(int commentsOnStoryId) {
         ArrayList<StoryModel> stories = new ArrayList<>();
@@ -102,7 +102,7 @@ public class StoryDao {
         return DaoUtils.storageDirectoryName() + File.separator + "story" + storyId + ".txt";
     }
 
-    /*
+    /**
      * Given a story filename, return the story that's saved in the file.
      */
     private static StoryModel getStory(File file) {
